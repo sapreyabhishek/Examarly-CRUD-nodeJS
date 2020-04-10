@@ -7,7 +7,11 @@ var mysqlConnection = require('./connection')
 app.use(methodOverride("_method"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");    
+    next();
+  });
 
 // Create the database
 app.get('/createdb', (req,res) => {
@@ -18,6 +22,7 @@ app.get('/createdb', (req,res) => {
         res.send('Database Created');
     })
 });
+
 
 var courseRoutes   = require("./routes/course");
 var subjectRoutes  = require("./routes/subject");
