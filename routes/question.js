@@ -441,8 +441,10 @@ router.post('/update-single-choice-question/:id', function(req, res) {
             var total_marks          = req.body.total_marks          || result[0].total_marks;
             var question_description = req.body.question_description || result[0].question_description;
             var solution_image_url   = req.body.solution_image_url   || result[0].solution_image_url;
-            let sql2 = "UPDATE single_choice_question SET question_type = ?, question_subject_id = ?, question_image_url =?, options = ?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ? WHERE question_id= ?";
-            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, options, correct_answer, total_marks, question_description, solution_image_url, id], (err2, result2) => {
+            var negative_mark        = req.body.negative_mark        || result[0].negative_mark;
+            var partial_mark         = req.body.partial_mark         || result[0].partial_mark;
+            let sql2 = "UPDATE single_choice_question SET question_type = ?, question_subject_id = ?, question_image_url =?, options = ?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ?, negative_mark = ?, partial_mark = ? WHERE question_id= ?";
+            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, options, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark, id], (err2, result2) => {
                 if(err2) {
                     res.status(500).send({ error: err2 })
                 }
@@ -476,8 +478,10 @@ router.post('/update-multiple-choice-question/:id', function(req, res) {
             var total_marks          = req.body.total_marks          || result[0].total_marks;
             var question_description = req.body.question_description || result[0].question_description;
             var solution_image_url   = req.body.solution_image_url   || result[0].solution_image_url;
-            let sql2 = "UPDATE multiple_choice_question SET question_type = ?, question_subject_id = ?, question_image_url =?, options = ?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ? WHERE question_id= ?";
-            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, options, correct_answer, total_marks, question_description, solution_image_url, id], (err2, result2) => {
+            var negative_mark        = req.body.negative_mark        || result[0].negative_mark;
+            var partial_mark         = req.body.partial_mark         || result[0].partial_mark;
+            let sql2 = "UPDATE multiple_choice_question SET question_type = ?, question_subject_id = ?, question_image_url =?, options = ?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ?, negative_mark = ?, partial_mark = ? WHERE question_id= ?";
+            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, options, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark, id], (err2, result2) => {
                 if(err2) {
                     res.status(500).send({ error: err2 })
                 }
@@ -510,8 +514,10 @@ router.post('/update-subjective-type-question/:id', function(req, res) {
             var total_marks          = req.body.total_marks          || result[0].total_marks;
             var question_description = req.body.question_description || result[0].question_description;
             var solution_image_url   = req.body.solution_image_url   || result[0].solution_image_url;
-            let sql2 = "UPDATE subjective_type_question SET question_type = ?, question_subject_id = ?, question_image_url =?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ? WHERE question_id= ?";
-            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, correct_answer, total_marks, question_description, solution_image_url, id], (err2, result2) => {
+            var negative_mark        = req.body.negative_mark        || result[0].negative_mark;
+            var partial_mark         = req.body.partial_mark         || result[0].partial_mark;
+            let sql2 = "UPDATE subjective_type_question SET question_type = ?, question_subject_id = ?, question_image_url =?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ?, negative_mark = ?, partial_mark = ? WHERE question_id= ?";
+            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark, id], (err2, result2) => {
                 if(err2) {
                     res.status(500).send({ error: err2 })
                 }
@@ -544,8 +550,10 @@ router.post('/update-integer-type-question/:id', function(req, res) {
             var total_marks          = req.body.total_marks          || result[0].total_marks;
             var question_description = req.body.question_description || result[0].question_description;
             var solution_image_url   = req.body.solution_image_url   || result[0].solution_image_url;
-            let sql2 = "UPDATE integer_type_question SET question_type = ?, question_subject_id = ?, question_image_url =?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ? WHERE question_id= ?";
-            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, correct_answer, total_marks, question_description, solution_image_url, id], (err2, result2) => {
+            var negative_mark        = req.body.negative_mark        || result[0].negative_mark;
+            var partial_mark         = req.body.partial_mark         || result[0].partial_mark;
+            let sql2 = "UPDATE integer_type_question SET question_type = ?, question_subject_id = ?, question_image_url =?, correct_answer = ?, total_marks = ?, question_description = ?, solution_image_url = ?, negative_mark = ?, partial_mark = ? WHERE question_id= ?";
+            mysqlConnection.query(sql2, [question_type, question_subject_id, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark, id], (err2, result2) => {
                 if(err2) {
                     res.status(500).send({ error: err2 })
                 }
