@@ -5,7 +5,7 @@ var mysqlConnection = require('../connection');
 
  // create Single choice question table
  router.get('/create-single-choice-question', (req, res) => {
-    let sql = "CREATE TABLE single_choice_question(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url VARCHAR(256), options INT NOT NULL, correct_answer INT, total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id))"
+    let sql = "CREATE TABLE single_choice_question(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url VARCHAR(256), options INT NOT NULL, correct_answer INT, total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), negative_mark FLOAT DEFAULT 0, partial_mark FLOAT DEFAULT 0, FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id))"
     mysqlConnection.query(sql, (err, result) => {
       if(err){
         res.status(500).send({ error: err })
@@ -17,7 +17,7 @@ var mysqlConnection = require('../connection');
 
  // create Multiple choice questions table
  router.get('/create-multiple-choice-questions-table', (req, res) => {
-    let sql = "CREATE TABLE multiple_choice_questions(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url TEXT, options INT NOT NULL, correct_answer VARCHAR(20), total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id))"
+    let sql = "CREATE TABLE multiple_choice_questions(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url TEXT, options INT NOT NULL, correct_answer VARCHAR(20), total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), negative_mark FLOAT DEFAULT 0, partial_mark FLOAT DEFAULT 0, FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id))"
     mysqlConnection.query(sql, (err, result) => {
       if(err) {
         res.status(500).send({ error: err })
@@ -30,7 +30,7 @@ var mysqlConnection = require('../connection');
 
   // create subjective type questions table
 router.get('/create-subjective-type-questions-table', (req, res) => {
-    let sql = "CREATE TABLE subjective_type_questions(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url TEXT, correct_answer TEXT, total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id))"
+    let sql = "CREATE TABLE subjective_type_questions(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url TEXT, correct_answer TEXT, total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), negative_mark FLOAT DEFAULT 0, partial_mark FLOAT DEFAULT 0, FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id))"
     mysqlConnection.query(sql, (err, result) => {
       if(err) {
         res.status(500).send({ error: err })
@@ -43,7 +43,7 @@ router.get('/create-subjective-type-questions-table', (req, res) => {
 
  // create integer type questions table
  router.get('/create-integer-type-questions-table', (req, res) => {
-    let sql = "CREATE TABLE integer_type_questions(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url VARCHAR(256), correct_answer FLOAT, total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id))"
+    let sql = "CREATE TABLE integer_type_questions(question_id INT AUTO_INCREMENT PRIMARY KEY, question_subject_id INT NOT NULL, question_type INT NOT NULL, question_image_url VARCHAR(256), correct_answer FLOAT, total_marks FLOAT, question_description TEXT, solution_image_url VARCHAR(256), negative_mark FLOAT DEFAULT 0, partial_mark FLOAT DEFAULT 0, FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (question_subject_id) REFERENCES question_subject(question_subject_id))"
     mysqlConnection.query(sql, (err, result) => {
       if(err) {
         res.status(500).send({ error: err })
