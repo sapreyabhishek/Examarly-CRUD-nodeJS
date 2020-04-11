@@ -10,7 +10,7 @@ router.get('/create-course-table', (req, res) => {
     mysqlConnection.query(sql, (err, result) => {
       if(err){
         console.log(err);
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -26,7 +26,7 @@ router.post('/insert-course', (req, res) => {
 
     if(!course_name){
       console.log("Invalid insert, course name cannot be empty");
-      res.status(500).send({ error: 'Compulsary field cannot be empty' })
+      res.status(202).send({ error: 'Course name cannot be empty' })
     }
     else{
       var value    = [[course_name, description, priority]];
@@ -34,7 +34,7 @@ router.post('/insert-course', (req, res) => {
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              console.log(err);
-             res.status(500).send({ error: err })
+             res.status(202).send({ error: err })
          }
          else{
             res.status(200).send(result);
@@ -49,7 +49,7 @@ router.get('/fetch-courses', (req, res) => {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -63,7 +63,7 @@ router.get('/fetch-course/:id', function(req, res) {
     var sql = "SELECT * FROM course WHERE course_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -75,9 +75,11 @@ router.get('/fetch-course/:id', function(req, res) {
 router.post('/update-course/:id', function(req, res) {
   var id = req.params.id;
   var sql = "SELECT * FROM course WHERE course_id="  + mysql.escape(id);
+  console.log(req.body);
+  console.log(id);
   mysqlConnection.query(sql, function(err, result) {
     if(err) {
-      res.status(500).send({ error: err })
+      res.status(202).send({ error: err })
     }
     else{
       if(result.length !=0){
@@ -87,7 +89,7 @@ router.post('/update-course/:id', function(req, res) {
           let sql2 = "UPDATE course SET course_name = ?, description = ?, priority = ? WHERE course_id= ?";
           mysqlConnection.query(sql2, [course_name, description, priority, id], (err2, result2) => {
               if(err2) {
-                  res.status(500).send({ error: err2 })
+                  res.status(202).send({ error: err2 })
               }
               else{
                   res.status(200).send({success : "Table was succesfully updated."});
@@ -107,24 +109,23 @@ router.post('/update-course/:id', function(req, res) {
     var sql = "DELETE FROM lecture WHERE course_id=" + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-        res.status(500).send({ error: err });
+        res.status(202).send({ error: err });
         }
         else{
             var sql2 = "DELETE FROM subject WHERE course_id=" + mysql.escape(id);
             mysqlConnection.query(sql2, function(err2, result2) {
                 if(err2){
-                res.status(500).send({ error: err2 });
+                res.status(202).send({ error: err2 });
                 }
                 else{
                     var sql3 = "DELETE FROM course WHERE course_id=" + mysql.escape(id);
                     mysqlConnection.query(sql3, function(err3, result3) {
                         if(err3){
-                        res.status(500).send({ error: err3 });
+                        res.status(202).send({ error: err3 });
                         }
                         else{
                             res.status(200).send({'status': 'Deleting the course was a success'});
                         }
-                        
                     });
                 }
                 

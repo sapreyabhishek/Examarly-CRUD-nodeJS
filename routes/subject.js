@@ -10,7 +10,7 @@ router.get('/create-subject-table', (req, res) => {
     mysqlConnection.query(sql, (err, result) => {
       if(err){
         console.log(err);
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -28,7 +28,7 @@ router.post('/insert-subject/:id', (req, res) => {
 
     if(!subject_name){
       console.log("Invalid insert, subject name cannot be empty");
-      res.status(500).send({ error: 'Compulsary field cannot be empty' })
+      res.status(202).send({ error: 'subject name cannot be empty' })
     }
     else{
       var value    = [[course_id, subject_name, description, hide, priority]];
@@ -36,7 +36,7 @@ router.post('/insert-subject/:id', (req, res) => {
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              console.log(err);
-             res.status(500).send({ error: err })
+             res.status(202).send({ error: err })
          }
          else{
             res.status(200).send(result);
@@ -51,7 +51,7 @@ router.get('/fetch-subjects', (req, res) => {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -66,7 +66,7 @@ router.get('/fetch-subject-by-courseid-normal-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -81,7 +81,7 @@ router.get('/fetch-subject-by-courseid-premium-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -95,7 +95,7 @@ router.get('/fetch-subject-by-subjectid/:id', function(req, res) {
     var sql = "SELECT * FROM subject WHERE subject_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -109,7 +109,7 @@ router.post('/update-subject/:id', function(req, res) {
     var sql = "SELECT * FROM subject WHERE subject_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         if(result.length !=0){
@@ -121,7 +121,7 @@ router.post('/update-subject/:id', function(req, res) {
             let sql2 = "UPDATE subject SET course_id = ?, subject_name = ?, description = ?, hide = ?, priority = ? WHERE subject_id= ?";
             mysqlConnection.query(sql2, [course_id, subject_name, description, hide, priority, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -141,13 +141,13 @@ router.post('/update-subject/:id', function(req, res) {
     var sql = "DELETE FROM lecture WHERE subject_id=" + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-        res.status(500).send({ error: err });
+        res.status(202).send({ error: err });
         }
         else{
             var sql2 = "DELETE FROM subject WHERE subject_id=" + mysql.escape(id);
             mysqlConnection.query(sql2, function(err2, result2) {
                 if(err2){
-                res.status(500).send({ error: err2 });
+                res.status(202).send({ error: err2 });
                 }
                 else{
                     res.status(200).send({'status': 'Deleting the subject was a success'});

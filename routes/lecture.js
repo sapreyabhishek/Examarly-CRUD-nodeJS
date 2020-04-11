@@ -10,7 +10,7 @@ router.get('/create-lecture-table', (req, res) => {
     mysqlConnection.query(sql, (err, result) => {
       if(err){
         console.log(err);
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -30,7 +30,7 @@ router.post('/insert-lecture/:courseid/:subjectid', (req, res) => {
 
     if(!lecture_name){
       console.log("Invalid insert, lecture name cannot be empty");
-      res.status(500).send({ error: 'Compulsary field cannot be empty' })
+      res.status(202).send({ error: 'lecture name cannot be empty' })
     }
     else{
       var value    = [[course_id, subject_id, lecture_name, video_link, description, hide, priority]];
@@ -38,7 +38,7 @@ router.post('/insert-lecture/:courseid/:subjectid', (req, res) => {
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              console.log(err);
-             res.status(500).send({ error: err })
+             res.status(202).send({ error: err })
          }
          else{
             res.status(200).send(result);
@@ -53,7 +53,7 @@ router.get('/fetch-lectures', (req, res) => {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -68,7 +68,7 @@ router.get('/fetch-lecture-by-courseid-normal-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -83,7 +83,7 @@ router.get('/fetch-lecture-by-courseid-premium-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -98,7 +98,7 @@ router.get('/fetch-lecture-by-subjectid-normal-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -113,7 +113,7 @@ router.get('/fetch-lecture-by-subjectid-premium-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -127,7 +127,7 @@ router.get('/fetch-lecture-by-lectureid/:id', function(req, res) {
     var sql = "SELECT * FROM lecture WHERE lecture_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -141,9 +141,10 @@ router.post('/update-lecture/:id', function(req, res) {
     var sql = "SELECT * FROM lecture WHERE lecture_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
+          console.log(id);
         if(result.length !=0){
             var lecture_name = req.body.lecture_name || result[0].lecture_name;
             var subject_id   = req.body.subjectid    || result[0].subject_id;
@@ -155,7 +156,7 @@ router.post('/update-lecture/:id', function(req, res) {
             let sql2 = "UPDATE lecture SET course_id = ?, subject_id =?, lecture_name = ?, video_link = ?, description = ?, hide = ?, priority = ? WHERE lecture_id= ?";
             mysqlConnection.query(sql2, [course_id, subject_id, lecture_name, video_link, description, hide, priority, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -175,13 +176,13 @@ router.post('/update-lecture/:id', function(req, res) {
     var sql = "DELETE FROM notes WHERE lecture_id=" + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-        res.status(500).send({ error: err });
+        res.status(202).send({ error: err });
         }
         else{
             var sql2 = "DELETE FROM lecture WHERE lecture_id=" + mysql.escape(id);
             mysqlConnection.query(sql2, function(err2, result2) {
                 if(err2){
-                res.status(500).send({ error: err2 });
+                res.status(202).send({ error: err2 });
                 }
                 else{
                     res.status(200).send({'status': 'Deleting the lecture was a success'});

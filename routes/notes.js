@@ -10,7 +10,7 @@ router.get('/create-notes-table', (req, res) => {
     mysqlConnection.query(sql, (err, result) => {
       if(err){
         console.log(err);
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -28,7 +28,7 @@ router.post('/insert-notes/:lectureid', (req, res) => {
 
     if(!notes_name){
       console.log("Invalid insert, notes name cannot be empty");
-      res.status(500).send({ error: 'Compulsary field cannot be empty' })
+      res.status(202).send({ error: 'Notes Name cannot be empty' })
     }
     else{
       var value    = [[lecture_id, notes_name, notes_link, hide, priority]];
@@ -36,7 +36,7 @@ router.post('/insert-notes/:lectureid', (req, res) => {
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              console.log(err);
-             res.status(500).send({ error: err })
+             res.status(202).send({ error: err })
          }
          else{
             res.status(200).send(result);
@@ -51,7 +51,7 @@ router.get('/fetch-all-notes', (req, res) => {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -66,7 +66,7 @@ router.get('/fetch-notes-by-lectureid-normal-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -81,7 +81,7 @@ router.get('/fetch-notes-by-lectureid-premium-users/:id', function(req, res) {
     mysqlConnection.query(sql , (err, result) => {
         if(err){
             console.log(err);
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -95,7 +95,7 @@ router.get('/fetch-notes-by-notesid/:id', function(req, res) {
     var sql = "SELECT * FROM notes WHERE notes_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         res.status(200).send(result);
@@ -109,7 +109,7 @@ router.post('/update-notes/:id', function(req, res) {
     var sql = "SELECT * FROM notes WHERE notes_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         if(result.length !=0){
@@ -121,7 +121,7 @@ router.post('/update-notes/:id', function(req, res) {
             let sql2 = "UPDATE notes SET lecture_id = ?, notes_name = ?, notes_link = ?, hide = ?, priority = ? WHERE notes_id= ?";
             mysqlConnection.query(sql2, [lecture_id, notes_name, notes_link, hide, priority, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -141,7 +141,7 @@ router.post('/update-notes/:id', function(req, res) {
     var sql = "DELETE FROM notes WHERE notes_id=" + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-        res.status(500).send({ error: err });
+        res.status(202).send({ error: err });
         }
         res.status(200).send({'status': 'Deleting the notes was a success'});
     });
@@ -153,7 +153,7 @@ router.post('/update-notes/:id', function(req, res) {
     var sql = "DELETE FROM notes WHERE lecture_id=" + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-        res.status(500).send({ error: err });
+        res.status(202).send({ error: err });
         }
         res.status(200).send({'status': 'Deleting the notes was a success'});
     });

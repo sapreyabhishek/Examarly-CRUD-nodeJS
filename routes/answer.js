@@ -8,7 +8,7 @@ router.get('/create-single-choice-answer', (req, res) => {
   let sql = "CREATE TABLE single_choice_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer INT, FOREIGN KEY (question_id) REFERENCES single_choice_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
-      res.status(500).send({ error: err })
+      res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -21,7 +21,7 @@ router.get('/create-multiple-choice-answer', (req, res) => {
   let sql = "CREATE TABLE multiple_choice_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer TEXT, FOREIGN KEY (question_id) REFERENCES multiple_choice_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
           res.status(200).send(result);
@@ -34,7 +34,7 @@ router.get('/create-subjective-type-answer', (req, res) => {
   let sql = "CREATE TABLE subjective_type_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer TEXT, FOREIGN KEY (question_id) REFERENCES subjective_type_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
           res.status(200).send(result);
@@ -47,7 +47,7 @@ router.get('/create-integer-type-answer', (req, res) => {
   let sql = "CREATE TABLE integer_type_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer FLOAT, FOREIGN KEY (question_id) REFERENCES integer_type_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
           res.status(200).send(result);
@@ -64,22 +64,22 @@ router.get('/create-integer-type-answer', (req, res) => {
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question id cannot be empty' });
   }
   else if(!question_type){
     console.log("Invalid insert, question type cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question type cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question type cannot be empty' });
   }
   else if(!user_id){
     console.log("Invalid insert, user_id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, user_id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
     var value    = [[question_id, question_type, user_id, answer]];
     let sql = "INSERT INTO single_choice_answer (question_id, question_type, user_id, answer) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -97,22 +97,22 @@ router.get('/create-integer-type-answer', (req, res) => {
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question id cannot be empty' });
   }
   else if(!question_type){
     console.log("Invalid insert, question type cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question type cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question type cannot be empty' });
   }
   else if(!user_id){
     console.log("Invalid insert, user_id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, user_id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
     var value    = [[question_id, question_type, user_id, answer]];
     let sql = "INSERT INTO multiple_choice_answer (question_id, question_type, user_id, answer) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -130,22 +130,22 @@ router.get('/create-integer-type-answer', (req, res) => {
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question id cannot be empty' });
   }
   else if(!question_type){
     console.log("Invalid insert, question type cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question type cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question type cannot be empty' });
   }
   else if(!user_id){
     console.log("Invalid insert, user_id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, user_id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
     var value    = [[question_id, question_type, user_id, answer]];
     let sql = "INSERT INTO subjective_type_answer (question_id, question_type, user_id, answer) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -163,22 +163,22 @@ router.get('/create-integer-type-answer', (req, res) => {
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question id cannot be empty' });
   }
   else if(!question_type){
     console.log("Invalid insert, question type cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, question type cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, question type cannot be empty' });
   }
   else if(!user_id){
     console.log("Invalid insert, user_id cannot be empty");
-    res.status(500).send({ error: 'Invalid insert, user_id cannot be empty' });
+    res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
     var value    = [[question_id, question_type, user_id, answer]];
     let sql = "INSERT INTO integer_type_answer (question_id, question_type, user_id, answer) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -192,7 +192,7 @@ router.get('/fetch-single-choice-answer', (req, res) => {
   let sql = "SELECT * FROM single_choice_answer"
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -205,7 +205,7 @@ router.get('/fetch-multiple-choice-answer', (req, res) => {
   let sql = "SELECT * FROM multiple_choice_answer"
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -218,7 +218,7 @@ router.get('/fetch-subjective-type-answer', (req, res) => {
   let sql = "SELECT * FROM subjective_type_answer"
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -231,7 +231,7 @@ router.get('/fetch-integer-type-answer', (req, res) => {
   let sql = "SELECT * FROM integer_type_answer"
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -245,7 +245,7 @@ router.get('/fetch-single-choice-answer/:id', function(req, res) {
   var sql = "SELECT * FROM single_choice_answer WHERE answer_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -259,7 +259,7 @@ router.get('/fetch-single-answer-by-questionid/:id', function(req, res) {
   var sql = "SELECT * FROM single_choice_answer WHERE question_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -273,7 +273,7 @@ router.get('/fetch-single-answer-by-questiontype/:id', function(req, res) {
   var sql = "SELECT * FROM single_choice_answer WHERE question_type="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -287,7 +287,7 @@ router.get('/fetch-single-answer-by-userid/:id', function(req, res) {
   var sql = "SELECT * FROM single_choice_answer WHERE user_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -301,7 +301,7 @@ router.get('/fetch-multiple-choice-answer/:id', function(req, res) {
   var sql = "SELECT * FROM multiple_choice_answer WHERE answer_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -315,7 +315,7 @@ router.get('/fetch-multiple-answer-by-questionid/:id', function(req, res) {
   var sql = "SELECT * FROM multiple_choice_answer WHERE question_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -329,7 +329,7 @@ router.get('/fetch-multiple-answer-by-questiontype/:id', function(req, res) {
   var sql = "SELECT * FROM multiple_choice_answer WHERE question_type="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -343,7 +343,7 @@ router.get('/fetch-multiple-answer-by-userid/:id', function(req, res) {
   var sql = "SELECT * FROM multiple_choice_answer WHERE user_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -357,7 +357,7 @@ router.get('/fetch-subjective-type-answer/:id', function(req, res) {
   var sql = "SELECT * FROM subjective_type_answer WHERE answer_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -371,7 +371,7 @@ router.get('/fetch-subjective-answer-by-questionid/:id', function(req, res) {
   var sql = "SELECT * FROM subjective_type_answer WHERE question_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -385,7 +385,7 @@ router.get('/fetch-subjective-answer-by-questiontype/:id', function(req, res) {
   var sql = "SELECT * FROM subjective_type_answer WHERE question_type="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -399,7 +399,7 @@ router.get('/fetch-subjective-answer-by-userid/:id', function(req, res) {
   var sql = "SELECT * FROM subjective_type_answer WHERE user_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -413,7 +413,7 @@ router.get('/fetch-integer-type-answer/:id', function(req, res) {
   var sql = "SELECT * FROM integer_type_answer WHERE answer_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -427,7 +427,7 @@ router.get('/fetch-integer-answer-by-questionid/:id', function(req, res) {
   var sql = "SELECT * FROM integer_type_answer WHERE question_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -441,7 +441,7 @@ router.get('/fetch-integer-answer-by-questiontype/:id', function(req, res) {
   var sql = "SELECT * FROM integer_type_answer WHERE question_type="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -455,7 +455,7 @@ router.get('/fetch-integer-answer-by-userid/:id', function(req, res) {
   var sql = "SELECT * FROM integer_type_answer WHERE user_id="  + mysql.escape(id) ;
   mysqlConnection.query(sql , (err, result) => {
     if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send(result);
@@ -469,7 +469,7 @@ router.post('/update-single-choice-answer/:id', function(req, res) {
     var sql = "SELECT * FROM single_choice_answer WHERE answer_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         if(result.length !=0){
@@ -480,7 +480,7 @@ router.post('/update-single-choice-answer/:id', function(req, res) {
             let sql2 = "UPDATE single_choice_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
             mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -500,7 +500,7 @@ router.post('/update-multiple-choice-answer/:id', function(req, res) {
     var sql = "SELECT * FROM multiple_choice_answer WHERE answer_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         if(result.length !=0){
@@ -511,7 +511,7 @@ router.post('/update-multiple-choice-answer/:id', function(req, res) {
             let sql2 = "UPDATE multiple_choice_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
             mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -531,7 +531,7 @@ router.post('/update-subjective-type-answer/:id', function(req, res) {
     var sql = "SELECT * FROM subjective_type_answer WHERE answer_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         if(result.length !=0){
@@ -542,7 +542,7 @@ router.post('/update-subjective-type-answer/:id', function(req, res) {
             let sql2 = "UPDATE subjective_type_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
             mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -562,7 +562,7 @@ router.post('/update-integer-type-answer/:id', function(req, res) {
     var sql = "SELECT * FROM integer_type_answer WHERE answer_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         if(result.length !=0){
@@ -573,7 +573,7 @@ router.post('/update-integer-type-answer/:id', function(req, res) {
             let sql2 = "UPDATE integer_type_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
             mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -593,7 +593,7 @@ router.delete('/delete-single-choice-answer/:id', function(req, res, next) {
   var sql = "DELETE FROM single_choice_answer WHERE answer_id=" + mysql.escape(id);
   mysqlConnection.query(sql, function(err, result) {
     if(err)  {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send({'status': 'success'});
@@ -607,7 +607,7 @@ router.delete('/delete-multiple-choice-answer/:id', function(req, res, next) {
   var sql = "DELETE FROM multiple_choice_answer WHERE answer_id=" + mysql.escape(id);
   mysqlConnection.query(sql, function(err, result) {
     if(err)  {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send({'status': 'success'});
@@ -621,7 +621,7 @@ router.delete('/delete-subjective-type-answer/:id', function(req, res, next) {
   var sql3 = "DELETE FROM subjective_type_answer WHERE answer_id=" + mysql.escape(id);
   mysqlConnection.query(sql3, function(err, result) {
     if(err)  {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send({'status': 'success'});
@@ -635,7 +635,7 @@ router.delete('/delete-integer-type-answer/:id', function(req, res, next) {
   var sql3 = "DELETE FROM integer_type_answer WHERE answer_id=" + mysql.escape(id);
   mysqlConnection.query(sql3, function(err, result) {
     if(err)  {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
     }
     else{
         res.status(200).send({'status': 'success'});

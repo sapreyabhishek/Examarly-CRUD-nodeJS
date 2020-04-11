@@ -10,7 +10,7 @@ router.get('/create-user-table', (req, res) => {
     let sql = "CREATE TABLE user(user_id VARCHAR(512) PRIMARY KEY NOT NULL, email VARCHAR(512) NOT NULL, first_name VARCHAR(128) NOT NULL, mobile_number VARCHAR(20) NOT NULL, last_name VARCHAR(128))"
     mysqlConnection.query(sql, (err, result) => {
         if(err){
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -28,26 +28,26 @@ router.post('/add-user', (req, res) => {
 
     if(!user_id){
         console.log("Invalid insert, user id cannot be empty");
-        res.status(500).send({ error: 'Invalid insert, user id cannot be empty' })
+        res.status(202).send({ error: 'Invalid insert, user id cannot be empty' })
     }
     else if(!first_name){
         console.log("Invalid insert, first name cannot be empty");
-        res.status(500).send({ error: 'Invalid insert, first name cannot be empty' })
+        res.status(202).send({ error: 'Invalid insert, first name cannot be empty' })
     }
     else if(!email){
         console.log("Invalid insert, email cannot be empty");
-        res.status(500).send({ error: 'Invalid insert, email cannot be empty' })
+        res.status(202).send({ error: 'Invalid insert, email cannot be empty' })
     }
     else if(!mobile_number){
         console.log("Invalid insert, mobile number cannot be empty");
-        res.status(500).send({ error: 'Invalid insert, mobile number cannot be empty' })
+        res.status(202).send({ error: 'Invalid insert, mobile number cannot be empty' })
     }
     else{
         var value    = [[user_id, email, first_name, mobile_number, last_name]];
         let sql = "INSERT INTO user(user_id, email, first_name, mobile_number, last_name) VALUES ?"
         mysqlConnection.query(sql, [value] , (err, result) => {
             if(err){
-                res.status(500).send({ error: err })
+                res.status(202).send({ error: err })
             }
             else{
                 res.status(200).send(result);
@@ -62,7 +62,7 @@ router.get('/fetch-user/:id', function(req, res) {
     var sql = "SELECT * FROM user WHERE user_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -75,7 +75,7 @@ router.get('/fetch-users', (req, res) => {
     let sql = "SELECT * FROM user"
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
@@ -89,7 +89,7 @@ router.put('/update-user/:id', function(req, res) {
     var sql = "SELECT * FROM user WHERE user_id="  + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
       if(err) {
-        res.status(500).send({ error: err })
+        res.status(202).send({ error: err })
       }
       else{
         if(result.length !=0){
@@ -100,7 +100,7 @@ router.put('/update-user/:id', function(req, res) {
             let sql2 = "UPDATE user SET email = ?, first_name = ?, mobile_number = ?, last_name =? WHERE user_id= ?";
             mysqlConnection.query(sql2, [email, first_name, mobile_number, last_name, id], (err2, result2) => {
                 if(err2) {
-                    res.status(500).send({ error: err2 })
+                    res.status(202).send({ error: err2 })
                 }
                 else{
                     res.status(200).send({success : "Table was succesfully updated."});
@@ -120,7 +120,7 @@ router.delete('/delete-user/:id', function(req, res, next) {
     var sql = "DELETE FROM user WHERE user_id=" + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
-            res.status(500).send({ error: err })
+            res.status(202).send({ error: err })
         }
         else{
             res.status(200).send(result);
