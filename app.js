@@ -32,6 +32,7 @@ var questionRoutes = require("./routes/question");
 var answerRoutes   = require("./routes/answer");
 var examRoutes     = require("./routes/exam");
 var userRoutes     = require("./routes/user");
+var qsubjectRoutes = require("./routes/qsubject");
 
 app.use("/course", courseRoutes);
 app.use("/subject", subjectRoutes);
@@ -41,6 +42,7 @@ app.use("/question", questionRoutes);
 app.use("/answer", answerRoutes);
 app.use("/exam", examRoutes);
 app.use("/user", userRoutes);
+app.use("/qsubject", qsubjectRoutes);
 
 app.listen('3000', () => {
     console.log('Server started at port 3000');

@@ -73,32 +73,32 @@ router.get('/fetch-course/:id', function(req, res) {
 
 // update a particular course from the course table
 router.post('/update-course/:id', function(req, res) {
-    var id = req.params.id;
-    var sql = "SELECT * FROM course WHERE course_id="  + mysql.escape(id);
-    mysqlConnection.query(sql, function(err, result) {
-      if(err) {
-        res.status(500).send({ error: err })
+  var id = req.params.id;
+  var sql = "SELECT * FROM course WHERE course_id="  + mysql.escape(id);
+  mysqlConnection.query(sql, function(err, result) {
+    if(err) {
+      res.status(500).send({ error: err })
+    }
+    else{
+      if(result.length !=0){
+          var course_name = req.body.course_name || result[0].course_name;
+          var description = req.body.description || result[0].description;
+          var priority    = req.body.priority    || result[0].priority;
+          let sql2 = "UPDATE course SET course_name = ?, description = ?, priority = ? WHERE course_id= ?";
+          mysqlConnection.query(sql2, [course_name, description, priority, id], (err2, result2) => {
+              if(err2) {
+                  res.status(500).send({ error: err2 })
+              }
+              else{
+                  res.status(200).send({success : "Table was succesfully updated."});
+              }
+          });
       }
       else{
-        if(result.length !=0){
-            var course_name = req.body.course_name || result[0].course_name;
-            var description = req.body.description || result[0].description;
-            var priority    = req.body.priority    || result[0].priority;
-            let sql2 = "UPDATE course SET course_name = ?, description = ?, priority = ? WHERE course_id= ?";
-            mysqlConnection.query(sql2, [course_name, description, priority, id], (err2, result2) => {
-                if(err2) {
-                    res.status(500).send({ error: err2 })
-                }
-                else{
-                    res.status(200).send({success : "Table was succesfully updated."});
-                }
-            });
-        }
-        else{
-            res.status(400).send({error : "No course with this courseid exits."});
-        }
+          res.status(400).send({error : "No course with this courseid exits."});
       }
-    })
+    }
+  })
 });
 
  // delete a particular course from the course table
