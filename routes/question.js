@@ -64,6 +64,8 @@ router.post('/insert-single-choice-question', (req, res) => {
     var total_marks       	= req.body.total_marks          || null;
     var question_description= req.body.question_description || null;
     var solution_image_url  = req.body.solution_image_url   || null;
+   var negative_mark  = req.body.negative_mark   || 0;
+   var partial_mark  = req.body.partial_mark  || 0;
    
     if(!options){
       console.log("Invalid insert, options cannot be empty");
@@ -78,8 +80,8 @@ router.post('/insert-single-choice-question', (req, res) => {
         res.status(500).send({ error: 'Invalid insert question_type cannot be empty' })
     }
     else{
-      var value    = [[question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url]];
-      let sql = "INSERT INTO single_choice_question (question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url) VALUES ?"
+      var value    = [[question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark]];
+      let sql = "INSERT INTO single_choice_question (question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark) VALUES ?"
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              res.status(500).send({ error: err })
@@ -101,6 +103,8 @@ router.post('/insert-single-choice-question', (req, res) => {
     var total_marks       	= req.body.total_marks          || null;
     var question_description= req.body.question_description || null;
     var solution_image_url  = req.body.solution_image_url   || null;
+    var negative_mark  = req.body.negative_mark   || 0;
+    var partial_mark  = req.body.partial_mark  || 0;
    
     if(!options){
       console.log("Invalid insert, options cannot be empty");
@@ -115,8 +119,8 @@ router.post('/insert-single-choice-question', (req, res) => {
         res.status(500).send({ error: 'Invalid insert question_type cannot be empty' })
     }
     else{
-      var value    = [[question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url]];
-      let sql = "INSERT INTO multiple_choice_question (question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url) VALUES ?"
+      var value    = [[question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark]];
+      let sql = "INSERT INTO multiple_choice_question (question_subject_id, question_type, options, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark) VALUES ?"
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              res.status(500).send({ error: err })
@@ -137,6 +141,8 @@ router.post('/insert-subjective-choice-question', (req, res) => {
     var total_marks       	= req.body.total_marks          || null;
     var question_description= req.body.question_description || null;
     var solution_image_url  = req.body.solution_image_url   || null;
+    var negative_mark  = req.body.negative_mark   || 0;
+    var partial_mark  = req.body.partial_mark  || 0;
    
     if(!question_type){
         console.log("Invalid insert question_type cannot be empty");
@@ -147,8 +153,8 @@ router.post('/insert-subjective-choice-question', (req, res) => {
         res.status(500).send({ error: 'Invalid insert question subject id cannot be empty' })
     }
     else{
-      var value    = [[question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url]];
-      let sql = "INSERT INTO subjective_type_question (question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url) VALUES ?"
+      var value    = [[question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark]];
+      let sql = "INSERT INTO subjective_type_question (question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark) VALUES ?"
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              res.status(500).send({ error: err })
@@ -169,6 +175,8 @@ router.post('/insert-integer-choice-question', (req, res) => {
     var total_marks       	= req.body.total_marks          || null;
     var question_description= req.body.question_description || null;
     var solution_image_url  = req.body.solution_image_url   || null;
+    var negative_mark  = req.body.negative_mark   || 0;
+    var partial_mark  = req.body.partial_mark  || 0;
    
     if(!question_type){
         console.log("Invalid insert question_type cannot be empty");
@@ -179,8 +187,8 @@ router.post('/insert-integer-choice-question', (req, res) => {
         res.status(500).send({ error: 'Invalid insert question subject id cannot be empty' })
     }
     else{
-      var value    = [[question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url]];
-      let sql = "INSERT INTO integer_type_question (question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url) VALUES ?"
+      var value    = [[question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark]];
+      let sql = "INSERT INTO integer_type_question (question_subject_id, question_type, question_image_url, correct_answer, total_marks, question_description, solution_image_url, negative_mark, partial_mark) VALUES ?"
       mysqlConnection.query(sql, [value] , (err, result) => {
          if(err) {
              res.status(500).send({ error: err })
