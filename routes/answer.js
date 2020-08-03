@@ -5,7 +5,7 @@ var mysqlConnection = require('../connection');
 
  // create Single choice answer table
 router.get('/create-single-choice-answer', (req, res) => {
-  let sql = "CREATE TABLE single_choice_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer INT, FOREIGN KEY (question_id) REFERENCES single_choice_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
+  let sql = "CREATE TABLE single_choice_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(128) NOT NULL, answer INT, answer_gain FLOAT default 0, FOREIGN KEY (question_id) REFERENCES single_choice_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
       res.status(202).send({ error: err })
@@ -18,7 +18,7 @@ router.get('/create-single-choice-answer', (req, res) => {
 
  // create multiple choice answer table
 router.get('/create-multiple-choice-answer', (req, res) => {
-  let sql = "CREATE TABLE multiple_choice_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer TEXT, FOREIGN KEY (question_id) REFERENCES multiple_choice_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
+  let sql = "CREATE TABLE multiple_choice_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(128) NOT NULL, answer TEXT, answer_gain FLOAT default 0, FOREIGN KEY (question_id) REFERENCES multiple_choice_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
         res.status(202).send({ error: err })
@@ -31,7 +31,7 @@ router.get('/create-multiple-choice-answer', (req, res) => {
 
  // create subjective type answer table
 router.get('/create-subjective-type-answer', (req, res) => {
-  let sql = "CREATE TABLE subjective_type_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer TEXT, FOREIGN KEY (question_id) REFERENCES subjective_type_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
+  let sql = "CREATE TABLE subjective_type_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(128) NOT NULL, answer TEXT, answer_gain FLOAT default 0, FOREIGN KEY (question_id) REFERENCES subjective_type_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
         res.status(202).send({ error: err })
@@ -44,7 +44,7 @@ router.get('/create-subjective-type-answer', (req, res) => {
 
  // create integer type answer table
 router.get('/create-integer-type-answer', (req, res) => {
-  let sql = "CREATE TABLE integer_type_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(512) NOT NULL, answer FLOAT, FOREIGN KEY (question_id) REFERENCES integer_type_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
+  let sql = "CREATE TABLE integer_type_answer(answer_id INT AUTO_INCREMENT PRIMARY KEY, question_id INT NOT NULL, question_type INT NOT NULL, user_id VARCHAR(128) NOT NULL, answer FLOAT, answer_gain FLOAT default 0, FOREIGN KEY (question_id) REFERENCES integer_type_question(question_id), FOREIGN KEY (question_type) REFERENCES exam_question_type(exam_question_type_id), FOREIGN KEY (user_id) REFERENCES user(user_id))"
   mysqlConnection.query(sql, (err, result) => {
     if(err) {
         res.status(202).send({ error: err })
@@ -61,6 +61,7 @@ router.get('/create-integer-type-answer', (req, res) => {
   var question_type = req.body.question_type;
   var user_id		= req.body.user_id;
   var answer    	= req.body.answer || null;
+  var answer_gain	= req.body.answer_gain || 0;
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
@@ -75,8 +76,8 @@ router.get('/create-integer-type-answer', (req, res) => {
     res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
-    var value    = [[question_id, question_type, user_id, answer]];
-    let sql = "INSERT INTO single_choice_answer (question_id, question_type, user_id, answer) VALUES ?"
+    var value    = [[question_id, question_type, user_id, answer, answer_gain]];
+    let sql = "INSERT INTO single_choice_answer (question_id, question_type, user_id, answer, answer_gain) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
             res.status(202).send({ error: err })
@@ -94,6 +95,7 @@ router.get('/create-integer-type-answer', (req, res) => {
   var question_type = req.body.question_type;
   var user_id		= req.body.user_id;
   var answer    	= req.body.answer || null;
+  var answer_gain	= req.body.answer_gain || 0;
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
@@ -108,8 +110,8 @@ router.get('/create-integer-type-answer', (req, res) => {
     res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
-    var value    = [[question_id, question_type, user_id, answer]];
-    let sql = "INSERT INTO multiple_choice_answer (question_id, question_type, user_id, answer) VALUES ?"
+    var value    = [[question_id, question_type, user_id, answer, answer_gain]];
+    let sql = "INSERT INTO multiple_choice_answer (question_id, question_type, user_id, answer, answer_gain) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
             res.status(202).send({ error: err })
@@ -127,6 +129,7 @@ router.get('/create-integer-type-answer', (req, res) => {
   var question_type = req.body.question_type;
   var user_id		= req.body.user_id;
     var answer    	= req.body.answer || null;
+	var answer_gain	= req.body.answer_gain || 0;
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
@@ -141,8 +144,8 @@ router.get('/create-integer-type-answer', (req, res) => {
     res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
-    var value    = [[question_id, question_type, user_id, answer]];
-    let sql = "INSERT INTO subjective_type_answer (question_id, question_type, user_id, answer) VALUES ?"
+    var value    = [[question_id, question_type, user_id, answer, answer_gain]];
+    let sql = "INSERT INTO subjective_type_answer (question_id, question_type, user_id, answer, answer_gain) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
             res.status(202).send({ error: err })
@@ -160,6 +163,7 @@ router.get('/create-integer-type-answer', (req, res) => {
   var question_type = req.body.question_type;
   var user_id		= req.body.user_id;
   var answer    	= req.body.answer || null;
+  var answer_gain	= req.body.answer_gain || 0;
 
   if(!question_id){
     console.log("Invalid insert, question id cannot be empty");
@@ -174,8 +178,8 @@ router.get('/create-integer-type-answer', (req, res) => {
     res.status(202).send({ error: 'Invalid insert, user_id cannot be empty' });
   }
   else{
-    var value    = [[question_id, question_type, user_id, answer]];
-    let sql = "INSERT INTO integer_type_answer (question_id, question_type, user_id, answer) VALUES ?"
+    var value    = [[question_id, question_type, user_id, answer, answer_gain]];
+    let sql = "INSERT INTO integer_type_answer (question_id, question_type, user_id, answer, answer_gain) VALUES ?"
     mysqlConnection.query(sql, [value] , (err, result) => {
         if(err) {
             res.status(202).send({ error: err })
@@ -477,8 +481,9 @@ router.post('/update-single-choice-answer/:id', function(req, res) {
             var question_type = req.body.question_type || result[0].question_type;
             var user_id       = req.body.user_id       || result[0].user_id;
             var answer        = req.body.answer        || result[0].answer;
-            let sql2 = "UPDATE single_choice_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
-            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
+			var answer_gain	  = req.body.answer_gain   || result[0].answer_gain;
+            let sql2 = "UPDATE single_choice_answer SET question_id = ?, question_type =?, user_id = ?, answer = ?, answer_gain = ? WHERE answer_id= ?";
+            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, answer_gain, id], (err2, result2) => {
                 if(err2) {
                     res.status(202).send({ error: err2 })
                 }
@@ -508,8 +513,9 @@ router.post('/update-multiple-choice-answer/:id', function(req, res) {
             var question_type = req.body.question_type || result[0].question_type;
             var user_id       = req.body.user_id       || result[0].user_id;
             var answer        = req.body.answer        || result[0].answer;
-            let sql2 = "UPDATE multiple_choice_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
-            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
+			var answer_gain	  = req.body.answer_gain   || result[0].answer_gain;
+            let sql2 = "UPDATE multiple_choice_answer SET question_id = ?, question_type =?, user_id = ?, answer = ?, answer_gain = ? WHERE answer_id= ?";
+            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, answer_gain, id], (err2, result2) => {
                 if(err2) {
                     res.status(202).send({ error: err2 })
                 }
@@ -539,8 +545,9 @@ router.post('/update-subjective-type-answer/:id', function(req, res) {
             var question_type = req.body.question_type || result[0].question_type;
             var user_id       = req.body.user_id       || result[0].user_id;
             var answer        = req.body.answer        || result[0].answer;
-            let sql2 = "UPDATE subjective_type_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
-            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
+			var answer_gain	  = req.body.answer_gain   || result[0].answer_gain;
+            let sql2 = "UPDATE subjective_type_answer SET question_id = ?, question_type =?, user_id = ?, answer = ?, answer_gain = ? WHERE answer_id= ?";
+            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, answer_gain, id], (err2, result2) => {
                 if(err2) {
                     res.status(202).send({ error: err2 })
                 }
@@ -570,8 +577,9 @@ router.post('/update-integer-type-answer/:id', function(req, res) {
             var question_type = req.body.question_type || result[0].question_type;
             var user_id       = req.body.user_id       || result[0].user_id;
             var answer        = req.body.answer        || result[0].answer;
-            let sql2 = "UPDATE integer_type_answer SET question_id = ?, question_type =?, user_id = ?, answer = ? WHERE answer_id= ?";
-            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, id], (err2, result2) => {
+			var answer_gain	  = req.body.answer_gain   || result[0].answer_gain;
+            let sql2 = "UPDATE integer_type_answer SET question_id = ?, question_type =?, user_id = ?, answer = ?, answer_gain = ? WHERE answer_id= ?";
+            mysqlConnection.query(sql2, [question_id, question_type, user_id, answer, answer_gain, id], (err2, result2) => {
                 if(err2) {
                     res.status(202).send({ error: err2 })
                 }
