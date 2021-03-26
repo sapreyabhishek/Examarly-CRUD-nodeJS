@@ -3,9 +3,8 @@ var methodOverride  = require("method-override");
 var bodyParser      = require("body-parser");
 const app           = express();
 var mysqlConnection = require('./connection')
-
 app.use(methodOverride("_method"));
-app.set('view engine', 'ejs');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -41,6 +40,8 @@ app.use("/exam", examRoutes);
 app.use("/user", userRoutes);
 app.use("/qsubject", qsubjectRoutes);
 
-app.listen('3000', () => {
+let server=app.listen('3000', () => {
     console.log('Server started at port 3000');
 });
+
+module.exports=server;

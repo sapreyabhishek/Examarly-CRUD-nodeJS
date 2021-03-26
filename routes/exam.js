@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+
+
 const mysql = require('mysql');
 var mysqlConnection = require('../connection');
 
@@ -15,6 +17,8 @@ router.get('/create-exam-question-type-table', (req, res) => {
         }
     })
  });
+
+
 
  // create exam table
 router.get('/create-exam-table', (req, res) => {
@@ -64,7 +68,7 @@ router.get('/create-exam-questions-table', (req, res) => {
      })
    }
   });
- 
+
 
   // insert exam details in the exam table by making a post request
  router.post('/insert-exam', (req, res) => {
@@ -99,7 +103,7 @@ router.get('/create-exam-questions-table', (req, res) => {
   var exam_question_type_id = req.body.exam_question_type_id;
   var question_id			= req.body.question_id || null;
   var question_marks		= req.body.question_marks || null;
-  
+
   if(!exam_id){
     console.log("Invalid insert, exam id cannot be empty");
     res.status(202).send({ error: 'Compulsary field cannot be empty' })
@@ -373,7 +377,7 @@ router.put('/update-exam-questions/:id', function(req, res) {
 							})
 						 }
 				     });
-        
+
 				   }
 				  });
 				}
@@ -406,11 +410,11 @@ router.put('/update-exam-questions/:id', function(req, res) {
         else{
           res.send({'status': 'success'})
         }
-        
+
       })
     }
   });
-  
+
 }); */
 
 // delete a particular exam question from the exam questions table
@@ -425,8 +429,8 @@ router.delete('/delete-exam-questions/:id', function(req, res, next) {
     else{
       res.send({'status': 'success'})
     }
-    
+
   })
 });
-  
+
 module.exports = router;

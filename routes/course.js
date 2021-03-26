@@ -18,6 +18,34 @@ router.get('/create-course-table', (req, res) => {
     })
 });
 
+router.get('/taken',(req,res)=>{
+  let sql = "CREATE TABLE opt(user_id int, course_id int,FOREIGN key (user_id) REFERENCES user(user_id), FOREIGN key (course_id) REFERENCES course(course_id))"
+  mysqlConnection.query(sql,(err,result)=>{
+    if(err)
+      console.log(err);
+    else {
+      res.status(200).send(result);
+    }
+  })
+});
+
+router.post('/taken_course/:id',(req,res)=>{
+  var userid=req.params.id;
+  var courseid=req.body.course_id;
+  var value    = [[userid, courseid]];
+  let sql = "INSERT INTO opt (user_id, course_id) VALUES ?"
+  mysqlConnection.query(sql, [value] , (err, result) => {
+     if(err) {
+         console.log(err);
+         res.status(202).send({ error: err })
+     }
+     else{
+        res.status(200).send(result);
+     }
+  })
+  console.log(courseid);
+});
+
 // insert course in the course table by making a post request
 router.post('/insert-course', (req, res) => {
     var course_name  = req.body.course_name;
@@ -57,6 +85,7 @@ router.get('/fetch-courses', (req, res) => {
     })
 });
 
+
 // Fetch a particular id from the courses
 router.get('/fetch-course/:id', function(req, res) {
     var id = req.params.id;
@@ -72,7 +101,7 @@ router.get('/fetch-course/:id', function(req, res) {
 });
 
 // update a particular course from the course table
-router.post('/update-course/:id', function(req, res) {
+router.put('/update-course/:id', function(req, res) {
   var id = req.params.id;
   var sql = "SELECT * FROM course WHERE course_id="  + mysql.escape(id);
   console.log(req.body);
@@ -106,30 +135,15 @@ router.post('/update-course/:id', function(req, res) {
  // delete a particular course from the course table
  router.delete('/delete-course/:id', function(req, res, next) {
     var id = req.params.id;
-    var sql = "DELETE FROM lecture WHERE course_id=" + mysql.escape(id);
+    var sql = "DELETE FROM course WHERE course_id=" + mysql.escape(id);
     mysqlConnection.query(sql, function(err, result) {
         if(err){
         res.status(202).send({ error: err });
         }
         else{
-            var sql2 = "DELETE FROM subject WHERE course_id=" + mysql.escape(id);
-            mysqlConnection.query(sql2, function(err2, result2) {
-                if(err2){
-                res.status(202).send({ error: err2 });
-                }
-                else{
-                    var sql3 = "DELETE FROM course WHERE course_id=" + mysql.escape(id);
-                    mysqlConnection.query(sql3, function(err3, result3) {
-                        if(err3){
-                        res.status(202).send({ error: err3 });
-                        }
-                        else{
-                            res.status(200).send({'status': 'Deleting the course was a success'});
-                        }
-                    });
-                }
-                
-            });
+
+                res.status(200).send({'status': 'Deleting the course was a success'});
+
         }
     });
 });
